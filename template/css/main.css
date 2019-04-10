@@ -3136,6 +3136,52 @@ input, select, textarea {
 		text-align: center;
 	}
 
+	.comments {
+		display: flex;
+	}
+	.comments__form {
+		flex: 1 1 50%;
+		margin-right: 10px;
+	}
+	.comments__form_submit {
+		margin-top: 15px;
+	}
+	.comments__list {
+		flex: 1 1 50%;
+		margin-left: 10px;
+	}
+	.comments__list ul {
+		padding-left: 0;
+	}
+	.comments__list_wrapper {
+		overflow-y: auto;
+		max-height: 360px;
+	}
+	.comment__item {
+		font-family: "Raleway", Helvetica, sans-serif;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 10px;
+		background: rgba(160, 160, 160, 0.075);
+		border: solid 1px rgba(160, 160, 160, 0.3);
+		border-radius: 4px;
+		padding: 5px 10px;
+	}
+	.comment__item_author {
+		font-weight: 600;
+		font-size: 16px;
+	}
+	.comment__item_date {
+		color: #a7a4a4;
+		font-size: 12px;
+		font-weight: 500;
+	}
+	.comment__item_text {
+		margin-top: 10px;
+		font-size: 14px;
+	}
+
 	header p {
 		font-family: "Raleway", Helvetica, sans-serif;
 		font-size: 0.7em;

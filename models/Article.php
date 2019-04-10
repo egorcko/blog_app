@@ -92,6 +92,51 @@ class Article {
    }
 
    /**
+    * Добавляет новый комментарий к посту
+    * @param array $options
+    */
+   public static function addComment($options) {
+      $db = Db::getConnection();
+      $sql = 'INSERT INTO comments (user_id, article_id, comment_text) '
+               . 'VALUES (:user_id, :article_id, :comment_text)';
+
+      $result = $db -> prepare($sql);
+      $result -> bindParam(':user_id', $options['user_id'], PDO::PARAM_INT);
+      $result -> bindParam(':article_id', $options['article_id'], PDO::PARAM_INT);
+      $result -> bindParam(':comment_text', $options['text'], PDO::PARAM_STR);
+
+      return $result -> execute();
+   }
+
+   /**
+    * Получает комментарии к заданному посту
+    * @param integer $articleId
+    * @return array
+    */
+   public static function getCommentsByArticle($articleId) {
+      $db = Db::getConnection();
+      $comments = array();
+      $sql = "SELECT comments.date, comments.comment_text, users.name ".
+            "FROM comments ".
+            "JOIN users ".
+            "ON comments.user_id = users.id ".
+            "WHERE article_id = {$articleId} ".
+            "ORDER BY date DESC";
+
+      $result = $db -> query($sql);
+      
+      $i=0;
+      while ($row = $result -> fetch()) {
+         $comments[$i]['name'] = $row['name'];
+         $comments[$i]['date'] = $row['date'];
+         $comments[$i]['text'] = $row['comment_text'];
+         $i ++;
+      } 
+
+      return $comments;
+   }
+
+   /**
     * Добавляет новую статью
     * @param array $options
     * @return integer ID добавленной записи

@@ -7,7 +7,18 @@ class ArticleController {
    public function actionView($articleId) {
       Article::increaseWatchCount($articleId);
       $article = Article::getArticleById($articleId);
+      $theme = Theme::getThemeById($article['theme_id']);
+      $options = [];
 
+      if (isset($_POST['submit'])) {
+         $options['text'] = $_POST['comment_text'];
+         $options['article_id'] = $articleId;
+         $options['user_id'] = $_SESSION['user'];
+
+         $result = Article::addComment($options);
+      }
+
+      $comments = Article::getCommentsByArticle($articleId);
       require_once(ROOT.'/views/article/view.php');
 
       return true;
